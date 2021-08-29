@@ -3,51 +3,52 @@ package com.maketshirt.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.maketshirt.api.model.Aluno;
 import com.maketshirt.api.repository.AlunoRepository;
 
-@Controller
+@RestController
 public class AlunoController {
 	
 	
-	private AlunoRepository alunorepository;
+private AlunoRepository alunorepository;
 	
 	@Autowired	
 	public AlunoController(AlunoRepository alunorepository) {
 		this.alunorepository = alunorepository;
 	}
 
-	@GetMapping("/")
+	@GetMapping("/status")
+	@ResponseStatus(HttpStatus.OK)
 	public String PrimeroEndPoint() {
-		return "index";
+		return "On-Line";
 		
 	}
 	
 	@GetMapping("/busca")
-	@ResponseBody
 	public List<Aluno> buscaAlunos(){
 		return alunorepository.findAll();
 	}
 	
 	@PostMapping("/cadastra")
-	@ResponseBody
-	public Aluno cadastraAluno(@RequestBody Aluno aluno) {
-		return alunorepository.save(aluno);
+	public String cadastraAluno(@RequestBody Aluno aluno) {
+		alunorepository.save(aluno);
+		return "Cadastrou"; 
 	}
 	
 	@PostMapping("/apaga")
-	@ResponseBody
 	public String apagaAluno(@RequestBody Aluno aluno) {
 		alunorepository.delete(aluno);
-		return "Aluno Apagado";
+		return "Apagou";
 		
 	}
 	
-
+	
+	
 }
