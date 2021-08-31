@@ -32,17 +32,20 @@ private AlunoRepository alunorepository;
 	}
 	
 	@GetMapping("/busca")
+	@ResponseStatus(HttpStatus.OK)
 	public List<Aluno> buscaAlunos(){
 		return alunorepository.findAll();
 	}
 	
 	@PostMapping("/cadastra")
+	@ResponseStatus(HttpStatus.CREATED)
 	public String cadastraAluno(@RequestBody Aluno aluno) {
 		alunorepository.save(aluno);
 		return "Cadastrou"; 
 	}
 	
 	@PostMapping("/apaga")
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public String apagaAluno(@RequestBody Aluno aluno) {
 		alunorepository.delete(aluno);
 		return "Apagou";
