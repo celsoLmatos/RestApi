@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +14,7 @@ import com.maketshirt.api.model.Aluno;
 import com.maketshirt.api.repository.AlunoRepository;
 
 @RestController
+@RequestMapping("/aluno")
 public class AlunoController {
 	
 	
@@ -24,28 +25,30 @@ private AlunoRepository alunorepository;
 		this.alunorepository = alunorepository;
 	}
 
-	@GetMapping("/status")
+	@RequestMapping(value = "/status", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public String PrimeroEndPoint() {
 		return "On-Line";
 		
 	}
 	
-	@GetMapping("/busca")
+	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public List<Aluno> buscaAlunos(){
 		return alunorepository.findAll();
 	}
 	
-	@PostMapping("/cadastra")
+	
+	@RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public String cadastraAluno(@RequestBody Aluno aluno) {
 		alunorepository.save(aluno);
 		return "Cadastrou"; 
 	}
 	
-	@PostMapping("/apaga")
-	@ResponseStatus(HttpStatus.ACCEPTED)
+	
+	@RequestMapping(value = "/apagar", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
 	public String apagaAluno(@RequestBody Aluno aluno) {
 		alunorepository.delete(aluno);
 		return "Apagou";
