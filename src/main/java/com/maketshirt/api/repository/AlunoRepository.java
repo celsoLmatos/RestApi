@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.maketshirt.api.model.Aluno;
 
 @Repository
-public interface AlunoRepository extends JpaRepository<Aluno, String> {
+public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 	
 	
 }
